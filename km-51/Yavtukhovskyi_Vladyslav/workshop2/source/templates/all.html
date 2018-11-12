@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ALL</title>
+</head>
+<body>
+<h1>USER DATA</h1>
+    {% for key, value in user.items() %}
+    <br>
+    {{ key}} is {{ value }}
+    {% endfor %}
+
+<h1>SYNDROMS DATA</h1>
+    {% for key, value in syndroms.items() %}
+    {{ key}} is hidden {{value}}
+    {% endfor %}
+</body>
+</html>

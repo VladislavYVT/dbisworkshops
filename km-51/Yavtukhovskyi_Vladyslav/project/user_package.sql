@@ -47,8 +47,16 @@ FUNCTION get_user (logs IN userss.login%TYPE)
 
     RETURN userRec;
     
-END USER_PACK;
+FUNCTION loginin (logs IN userss.login%type, pass IN userss.password%type)
 
+    RETURN INT;
+
+FUNCTION user_list (u_name IN USERSS.user_name%type)
+
+    RETURN tblUserSet
+    PIPELINED ;
+    
+END USER_PACK;
 
 
 
@@ -81,7 +89,7 @@ FUNCTION upd_user_pass (logs IN userss.login%TYPE, old_pass IN userss.password%T
     UPDATE USERSS SET password = new_pass WHERE login = logs;
     return 0;
     END upd_user_pass;
-    
+
 FUNCTION upd_user_name (logs IN userss.login%TYPE, u_name IN userss.user_name%TYPE)
 
     RETURN INTEGER
@@ -93,7 +101,7 @@ FUNCTION upd_user_name (logs IN userss.login%TYPE, u_name IN userss.user_name%TY
     UPDATE USERSS SET user_name = u_name WHERE login = logs;
     return 0;
     END upd_user_name;
-    
+
 FUNCTION upd_user_birth (logs IN userss.login%TYPE, u_birth IN userss.date_of_birth%TYPE)
 
     RETURN INTEGER
@@ -105,8 +113,8 @@ FUNCTION upd_user_birth (logs IN userss.login%TYPE, u_birth IN userss.date_of_bi
     UPDATE USERSS SET date_of_birth = u_birth WHERE login = logs;
     return 0;
     END upd_user_birth;
-    
-    
+
+
 FUNCTION new_user (logs IN userss.login%TYPE, pass IN userss.password%TYPE)
 
     RETURN INTEGER
@@ -115,9 +123,14 @@ FUNCTION new_user (logs IN userss.login%TYPE, pass IN userss.password%TYPE)
     BEGIN
     SELECT LOGIN INTO checks FROM userss where login=logs;
     IF checks is NOT NULL then return 1; END IF;
-    INSERT INTO USERSS(login, password) VALUES (logs, pass);
-    END new_user;
+
+    EXCEPTION 
+    WHEN no_data_found THEN
+    INSERT INTO USERSS(login, password, date_of_birth) VALUES (logs, pass, sysdate);
+    return 0;
     
+    END new_user;
+
 FUNCTION get_user (logs IN userss.login%TYPE)
 
     RETURN userRec
@@ -130,6 +143,32 @@ USER_NAME ,
 DATE_OF_BIRTH  INTO res FROM USERSS WHERE login = logs;
 return res;
     END get_user;
-END USER_PACK;
 
+FUNCTION loginin (logs IN userss.login%type, pass IN userss.password%type)
+
+    RETURN INT
+    IS
+    checks user_logpas;
+    BEGIN
+    SELECT LOGIN , PASSWORD   INTO checks FROM USERSS WHERE login = logs;
+    IF(checks.logs = logs) AND (checks.pass = pass) THEN return 1; ELSE return  2  ; END IF;
+END loginin;
+
+FUNCTION user_list (u_name IN USERSS.user_name%type)
+
+    RETURN tblUserSet
+
+    PIPELINED 
+    IS
+    CURSOR u_cur IS 
+    SELECT LOGIN , PASSWORD , USER_NAME , DATE_OF_BIRTH  FROM  USERSS WHERE user_name = u_name;
+    BEGIN 
+    FOR curr in u_cur 
+    LOOP
+        PIPE ROW(curr);
+    END LOOP;
+    END user_list;
+
+
+END USER_PACK;
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+
+    <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+
+<div class="topnav">
+    <pre>
+    {%- for item in current_menu.children recursive -%}
+    <a href="{{ item.url}}">{{ item.text }}     </a>
+    {%- if item.children -%}
+      {{ loop(item.children) }}
+    {%- endif -%}
+    {%- endfor -%}
+    </pre>
+</div>
+
+
+
+<H1>Hello and welcome to course project 'Diagnosing weakness by anamnesis'</H1>
+<H3>
+    This project consist of next main parts:
+    <ul>
+        <li>
+            User's history of healing(anamnesis)
+        </li>
+        <li>
+            Modifying data about system's knowledge base about weaknesses, syndromes, medicines and they relations between each other
+        </li>
+        <li>
+            Making prediction for user's syndrom (It's like the main part of course project, you may read about it below)
+        </li>
+        <li>
+            User's account
+        </li>
+        <li>
+            Trends about number of people that began to feel sick of given weakness by date
+        </li>
+
+    </ul>
+</H3>
+
+<H2>
+You can not delete record of weakness which end is more then 3 days ago
+You can not delete any information that is already used in someone's healing history
+
+Prediction is base on number of weaknesses with this syndrom overall, but in real project it's gonna be different
+</H2>
+</body>
+</html>

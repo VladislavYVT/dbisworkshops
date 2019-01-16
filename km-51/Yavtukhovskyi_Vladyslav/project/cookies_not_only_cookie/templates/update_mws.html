@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+      <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+
+<div class="topnav">
+    <pre>
+    {%- for item in current_menu.children recursive -%}
+    <a href="{{ item.url}}">{{ item.text }}     </a>
+    {%- if item.children -%}
+      {{ loop(item.children) }}
+    {%- endif -%}
+    {%- endfor -%}
+    </pre>
+</div>
+
+<H1>All is changing in this world. So names of weaknesses, medicines and syndromes. Here you may update it</H1>
+
+
+<h2>Update name of medicine</h2>
+
+     <form action = "/upd_m" method = post>
+         <fieldset>
+            {{ form.hidden_tag() }}
+
+            {{ form.data_old_field.label }} {{ form.data_old_field }} <br/>
+             {{ form.data_new_field.label }} {{ form.data_new_field }} <br/>
+
+            {{ form.submit }}
+
+
+            </div>
+
+         </fieldset>
+      </form>
+
+
+<h2> Update name of weakness</h2>
+     <form action = "/upd_w" method = post>
+         <fieldset>
+            {{ form.hidden_tag() }}
+
+            {{ form.data_old_field.label }} {{ form.data_old_field }} <br/>
+             {{ form.data_new_field.label }} {{ form.data_new_field }} <br/>
+
+            {{ form.submit }}
+
+
+            </div>
+
+         </fieldset>
+      </form>
+
+<h2> Update name of syndrom</h2>
+
+     <form action = "/upd_s" method = post>
+         <fieldset>
+            {{ form.hidden_tag() }}
+
+            {{ form.data_old_field.label }} {{ form.data_old_field }} <br/>
+             {{ form.data_new_field.label }} {{ form.data_new_field }} <br/>
+
+            {{ form.submit }}
+
+
+            </div>
+
+         </fieldset>
+      </form>
+
+
+</body>
+</html>

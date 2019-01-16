@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Main page</title>
+
+    <style>
+body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 10px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+  background-color: #4CAF50;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+
+<div class="topnav">
+    <pre>
+    {%- for item in current_menu.children recursive -%}
+    <a href="{{ item.url}}">{{ item.text }}     </a>
+    {%- if item.children -%}
+      {{ loop(item.children) }}
+    {%- endif -%}
+    {%- endfor -%}
+    </pre>
+</div>
+
+
+
+<h1>Your Healing History</h1>
+<h2>Weakness  - Medicine- Syndrom- Date of Diagnos - Date of begin -Date of end</h2>
+{% for item in data %}
+<tr>
+    <pre><td>{{item[0]}}</td>    <td>{{item[1]}}</td>    <td>{{item[2]}}</td>    <td>{{item[3]}}</td>    <td>{{item[4]}}</td>    <td>{{item[5]}}</td></pre>
+
+    <br>
+
+</tr>
+{% endfor %}
+
+
+<h1>New record to history</h1>
+     <form action = "/user_history" method = post>
+         <fieldset>
+            {{ form.hidden_tag() }}
+
+            {{ form.weakness_field.label }} {{ form.weakness_field }} <br/>
+             {{ form.medicine_field.label }} {{ form.medicine_field }} <br/>
+             {{ form.syndrom_field.label }} {{ form.syndrom_field }} <br/>
+             {{ form.date_diagnosis.label }} {{ form.date_diagnosis }} <br/>
+             {{ form.date_begin.label }} {{ form.date_begin }} <br/>
+             {{ form.date_end.label }} {{ form.date_end }} <br/>
+
+            {{ form.submit }}
+
+
+            </div>
+
+         </fieldset>
+      </form>
+
+<h1>Delete</h1>
+     <form action = "/del_user_history" method = post>
+         <fieldset>
+            {{ form.hidden_tag() }}
+
+            {{ form.weakness_field.label }} {{ form.weakness_field }} <br/>
+             {{ form.medicine_field.label }} {{ form.medicine_field }} <br/>
+             {{ form.syndrom_field.label }} {{ form.syndrom_field }} <br/>
+             {{ form.date_diagnosis.label }} {{ form.date_diagnosis }} <br/>
+             {{ form.date_begin.label }} {{ form.date_begin }} <br/>
+             {{ form.date_end.label }} {{ form.date_end }} <br/>
+
+            {{ form.submit }}
+
+
+            </div>
+
+         </fieldset>
+      </form>
+</body>
+</html>

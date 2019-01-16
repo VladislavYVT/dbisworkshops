@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+
+<div class="topnav">
+    <pre>
+    {%- for item in current_menu.children recursive -%}
+    <a href="{{ item.url}}">{{ item.text }}     </a>
+    {%- if item.children -%}
+      {{ loop(item.children) }}
+    {%- endif -%}
+    {%- endfor -%}
+    </pre>
+</div>
+
+
+
+     <form action = "/upd_diag_test" method = post>
+         <fieldset>
+            {{ form.hidden_tag() }}
+
+            {{ form.data_old_field.label }} {{ form.data_old_field }} <br/>
+             {{ form.data_new_field.label }} {{ form.data_new_field }} <br/>
+
+            {{ form.submit }}
+
+
+            </div>
+
+         </fieldset>
+      </form>
+</body>
+</html>
